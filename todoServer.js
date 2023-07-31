@@ -94,8 +94,7 @@ app.post("/signup",function(req,res){
 })
 
 app.post("/login", function (req, res) {
-  req.session.username = req.body.username;
-  req.session.isLoggedIn = true;
+  
   const username = req.body.username;
   const password = req.body.password;
   readAllUser(function(err,data){
@@ -108,6 +107,8 @@ app.post("/login", function (req, res) {
       return user.username===username && user.password===password;
     })
     if(user){
+      req.session.username = req.body.username;
+  req.session.isLoggedIn = true;
       res.redirect("/");
     }else{
       res.status(401).send("invalid credentials");
